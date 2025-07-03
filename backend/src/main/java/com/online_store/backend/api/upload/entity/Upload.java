@@ -1,6 +1,5 @@
 package com.online_store.backend.api.upload.entity;
 
-import java.sql.Blob;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -34,7 +33,8 @@ public class Upload {
     private String fileType;
 
     @Lob
-    private Blob fileContent;
+    @Column(name = "file_content", columnDefinition = "LONGBLOB")
+    private byte[] fileContent;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
