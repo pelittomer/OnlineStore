@@ -7,7 +7,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.online_store.backend.api.upload.entity.Upload;
+import com.online_store.backend.api.user.entity.User;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -48,8 +50,11 @@ public class Profile {
     @Column(name = "gender")
     private Gender gender = Gender.PREFER_NOT_TO_SAY;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Upload avatar;
+
+    @OneToOne(mappedBy = "profile", fetch = FetchType.LAZY)
+    private User user;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
