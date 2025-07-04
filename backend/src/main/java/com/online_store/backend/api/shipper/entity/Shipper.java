@@ -45,7 +45,7 @@ public class Shipper {
     private String description;
 
     @Column(length = 255)
-    private String website;
+    private String websiteUrl;
 
     @Column(nullable = false, length = 20)
     private String phone;
