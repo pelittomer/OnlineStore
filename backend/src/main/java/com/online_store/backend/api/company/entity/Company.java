@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.online_store.backend.api.upload.entity.Upload;
+import com.online_store.backend.api.user.entity.User;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -67,6 +68,9 @@ public class Company {
 
     @Column(length = 500)
     private String rejectionReason;
+
+    @OneToOne(mappedBy = "company", fetch = FetchType.LAZY)
+    private User user;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
