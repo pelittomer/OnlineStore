@@ -15,6 +15,7 @@ import com.online_store.backend.api.upload.entity.Upload;
 import com.online_store.backend.api.upload.service.UploadService;
 import com.online_store.backend.common.utils.CommonUtilsService;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -69,7 +70,7 @@ public class CategoryService {
 
     @Transactional(readOnly = true)
     public List<CategoryResponseDto> getAllCategories() {
-        return categoryRepository.findAllByOrderByLeftValueAsc().stream() 
+        return categoryRepository.findAllByOrderByLeftValueAsc().stream()
                 .map(this::mapCategoryToResponseDto)
                 .collect(Collectors.toList());
     }
@@ -87,4 +88,8 @@ public class CategoryService {
                 .build();
     }
 
+    public Category findCategoryById(Long categoryId) {
+        return categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new EntityNotFoundException("Category with ID " + categoryId + " not found!"));
+    }
 }
