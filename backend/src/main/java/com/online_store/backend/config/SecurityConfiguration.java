@@ -30,7 +30,8 @@ public class SecurityConfiguration {
                                                                 "/api/company/status",
                                                                 "/api/company/all",
                                                                 "/api/brand/all",
-                                                                "/api/category/all")
+                                                                "/api/category/all",
+                                                                "/api/variation/all")
                                                 .permitAll()
 
                                                 .anyRequest().authenticated())
