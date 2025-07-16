@@ -20,7 +20,9 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -31,7 +33,7 @@ import lombok.NoArgsConstructor;
 public class CriteriaOptions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; 
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "variation_option_id", nullable = false)
@@ -44,5 +46,7 @@ public class CriteriaOptions {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_criteria_id", nullable = false)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private ProductCriteria productCriteria;
 }

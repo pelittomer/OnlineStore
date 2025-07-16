@@ -11,6 +11,7 @@ import com.online_store.backend.api.category.dto.request.CategoryRequestDto;
 import com.online_store.backend.api.category.dto.response.CategoryResponseDto;
 import com.online_store.backend.api.category.entity.Category;
 import com.online_store.backend.api.category.repository.CategoryRepository;
+import com.online_store.backend.api.category.utils.CategoryUtilsService;
 import com.online_store.backend.api.upload.entity.Upload;
 import com.online_store.backend.api.upload.service.UploadService;
 import com.online_store.backend.common.utils.CommonUtilsService;
@@ -24,6 +25,7 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final CommonUtilsService commonUtilsService;
     private final UploadService uploadService;
+    private final CategoryUtilsService categoryUtilsService;
 
     @Transactional
     public void createCategory(
@@ -71,21 +73,8 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public List<CategoryResponseDto> getAllCategories() {
         return categoryRepository.findAllByOrderByLeftValueAsc().stream()
-                .map(this::mapCategoryToResponseDto)
+                .map(categoryUtilsService::mapCategoryToResponseDto)
                 .collect(Collectors.toList());
-    }
-
-    private CategoryResponseDto mapCategoryToResponseDto(Category category) {
-        return CategoryResponseDto.builder()
-                .id(category.getId())
-                .name(category.getName())
-                .description(category.getDescription())
-                .image(category.getImage() != null ? category.getImage().getId() : null)
-                .icon(category.getIcon() != null ? category.getIcon().getId() : null)
-                .leftValue(category.getLeftValue())
-                .rightValue(category.getRightValue())
-                .parent(category.getParent() != null ? category.getParent().getId() : null)
-                .build();
     }
 
     public Category findCategoryById(Long categoryId) {
