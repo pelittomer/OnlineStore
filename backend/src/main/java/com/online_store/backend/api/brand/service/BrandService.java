@@ -10,6 +10,7 @@ import com.online_store.backend.api.brand.dto.request.BrandRequestDto;
 import com.online_store.backend.api.brand.dto.response.BrandResponseDto;
 import com.online_store.backend.api.brand.entity.Brand;
 import com.online_store.backend.api.brand.repository.BrandRepository;
+import com.online_store.backend.api.brand.utils.BrandUtilsService;
 import com.online_store.backend.api.upload.entity.Upload;
 import com.online_store.backend.api.upload.service.UploadService;
 import com.online_store.backend.common.utils.CommonUtilsService;
@@ -23,6 +24,7 @@ public class BrandService {
     private final BrandRepository brandRepository;
     private final CommonUtilsService commonUtilsService;
     private final UploadService uploadService;
+    private final BrandUtilsService brandUtilsService;
 
     @Transactional
     public void createBrand(BrandRequestDto brandRequestDto, MultipartFile file) {
@@ -43,15 +45,7 @@ public class BrandService {
 
     public List<BrandResponseDto> getBrands() {
         return brandRepository.findAll().stream()
-                .map(this::mapBrandorResponseDto).toList();
-    }
-
-    private BrandResponseDto mapBrandorResponseDto(Brand brand) {
-        return BrandResponseDto.builder()
-                .id(brand.getId())
-                .name(brand.getName())
-                .logo(brand.getLogo().getId())
-                .build();
+                .map(brandUtilsService::mapBrandorResponseDto).toList();
     }
 
 }

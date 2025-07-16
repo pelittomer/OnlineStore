@@ -107,6 +107,15 @@ public class CompanyService {
         return companyUtilsService.mapCompanyTorResponseDto(company);
     }
 
+    public Company getCurrentUserCompanyForEdit() {
+        User currentUser = commonUtilsService.getCurrentUser();
+        Company company = currentUser.getCompany();
+        if (company == null) {
+            throw new RuntimeException("Company not found for the current user.");
+        }
+        return company;
+    }
+
     public List<CompanyResponseDto> getAllCompany() {
         Pageable pageable = PageRequest.of(0, 30);
         List<Company> allCompanies = companyRepository.findAll(pageable).getContent();
